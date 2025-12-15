@@ -325,9 +325,91 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
+        .chart {
+            margin: 40px 0;
+            padding: 30px;
+            background: #0f1425;
+            border-radius: 8px;
+            border: 1px solid #2a3250;
+        }
+
+        .chart-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #00d4ff;
+            text-align: center;
+        }
+
+        .chart-subtitle {
+            font-size: 0.95em;
+            color: #94a3b8;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bar-label {
+            min-width: 150px;
+            font-weight: 500;
+            color: #e2e8f0;
+            font-size: 1em;
+        }
+
+        .bar-container {
+            flex: 1;
+            background: #1a1f3a;
+            border-radius: 6px;
+            height: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: width 1s ease;
+        }
+
+        .bar-fill.red {
+            background: linear-gradient(90deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+        }
+
+        .bar-fill.blue {
+            background: linear-gradient(90deg, #00d4ff 0%, #0099cc 100%);
+            color: #0a0e27;
+        }
+
         @media (max-width: 768px) {
             section img {
                 height: 250px !important;
+            }
+
+            .bar-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .bar-label {
+                min-width: auto;
             }
             
             header h1 {
@@ -374,7 +456,7 @@
                 Your loan application was denied by an algorithm. The credit card company can't tell you exactly why. Should you trust that decision?
             </div>
 
-            <p>We've been taught to trust numbers and data. When an algorithm makes a decision: whether it's approving your loan, predicting crime risk, or deciding what news you see; it feels objective. Scientific. Unbiased.</p>
+            <p>We've been taught to trust numbers and data. When an algorithm makes a decision—whether it's approving your loan, predicting crime risk, or deciding what news you see, it feels objective. Scientific. Unbiased.</p>
 
             <p>But here's the problem: <span class="highlight">algorithms aren't neutral</span>. They're designed by people, trained on imperfect data, and optimized for specific goals that may have nothing to do with fairness or accuracy. The technical complexity just makes these human choices invisible.</p>
 
@@ -428,7 +510,7 @@
                 </div>
             </div>
 
-            <p>At every single stage, people are making judgment calls. The algorithm just executes those judgments at scale and makes them look like facts.</p>
+            <p>At every single stage, people are making judgment calls. The algorithm just executes those judgments at scale, making them look like facts.</p>
         </section>
 
         <section>
@@ -480,11 +562,51 @@
                 </div>
             </div>
 
+            <div class="chart">
+                <div class="chart-title">Credit Score Disparity by Race</div>
+                <div class="chart-subtitle">Median credit scores in the United States (2021 data)</div>
+                <div class="bar-chart">
+                    <div class="bar-row">
+                        <div class="bar-label">White consumers</div>
+                        <div class="bar-container">
+                            <div class="bar-fill blue" style="width: 97.3%">730</div>
+                        </div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">Black consumers</div>
+                        <div class="bar-container">
+                            <div class="bar-fill red" style="width: 85.1%">639</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #94a3b8; text-align: center;">91-point gap affects loan approvals, interest rates, and financial opportunities</p>
+            </div>
+
+            <div class="chart">
+                <div class="chart-title">COMPAS Algorithm False Positive Rates</div>
+                <div class="chart-subtitle">How often low-risk people are incorrectly labeled as high-risk (ProPublica, 2016)</div>
+                <div class="bar-chart">
+                    <div class="bar-row">
+                        <div class="bar-label">White defendants</div>
+                        <div class="bar-container">
+                            <div class="bar-fill blue" style="width: 23.5%">23.5%</div>
+                        </div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">Black defendants</div>
+                        <div class="bar-container">
+                            <div class="bar-fill red" style="width: 44.9%">44.9%</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #94a3b8; text-align: center;">Black defendants nearly twice as likely to be mislabeled as high-risk</p>
+            </div>
+
             <h3>Why This Happens</h3>
 
-            <p>Take the criminal justice example. COMPAS was trained on historical arrest data, which reflects decades of racially biased policing. More arrests in Black neighborhoods don't necessarily mean more crime; they often mean more police presence. But the algorithm learned to treat arrest patterns as objective truth.</p>
+            <p>Take the criminal justice example. COMPAS was trained on historical arrest data, data reflecting decades of racially biased policing. More arrests in Black neighborhoods don't necessarily mean more crime; they often mean more police presence. But the algorithm learned to treat arrest patterns as objective truth.</p>
 
-            <p>Or consider credit scoring: minority borrowers often have less data in their credit files (using alternative financial services, shorter credit histories). With less data, the algorithm makes noisier predictions, but those predictions still determine who gets loans.</p>
+            <p>Or consider credit scoring: minority borrowers often have less data in their credit files (using alternative financial services, shorter credit histories). With less data the algorithm makes noisier predictions, but those predictions still determine who gets loans.</p>
 
             <p>Social media is different but equally problematic. Platforms optimize for engagement: clicks, shares, time spent. Research shows this consistently amplifies emotional, divisive, and low-quality content because that's what keeps people scrolling. The algorithm isn't trying to inform you; it's trying to keep you on the platform.</p>
 
@@ -518,14 +640,14 @@
                 <div class="action-card">
                     <div class="icon">🔍</div>
                     <h4>Stay Skeptical</h4>
-                    <p>When someone says a system is "data-driven" or "objective," treat it as a claim that needs evidence, not as proof of neutrality. Check the sources, question the metrics.</p>
+                    <p>When someone says a system is "data-driven" or "objective," treat it as a claim that needs evidence; not as proof of neutrality. Check the sources, question the metrics.</p>
                 </div>
             </div>
         </section>
 
         <section class="cta">
             <h2>The Bottom Line</h2>
-            <p>Algorithms are powerful tools. But they're not truth machines. They're shaped by human choices about data, design, and goals, choices that often stay hidden behind technical complexity.</p>
+            <p>Algorithms are powerful tools. But they're not truth machines. They're shaped by human choices about data, design, and goals; these choices often stay hidden behind technical complexity.</p>
             <p style="margin-top: 30px; font-weight: 600;">Next time someone tells you a decision is "data-driven," ask them: <em>Whose data? Measuring what? Optimized for which goal?</em></p>
         </section>
     </div>
@@ -533,6 +655,7 @@
     <footer>
         <p>Created as part of a multimodal advocacy project on algorithmic transparency and data literacy.</p>
         <p style="margin-top: 10px;">Research sources: ProPublica, Stanford HAI, MIT Technology Review, Urban Institute, EPJ Data Science, Tech Policy Press</p>
+        <p style="margin-top: 10px; font-size: 0.85em;">Images: Pexels.com - Free to use | Data visualizations based on peer-reviewed research and investigative journalism</p>
     </footer>
 </body>
 </html>
