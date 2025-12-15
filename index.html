@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question the Algorithm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #0a0e27;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #c44569 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            margin-bottom: 60px;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        header .subtitle {
+            font-size: 1.3em;
+            color: white;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        section {
+            background: #1a1f3a;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            border: 1px solid #2a3250;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            color: #00d4ff;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+            color: #00d4ff;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #e2e8f0;
+        }
+
+        .hook {
+            background: rgba(255, 107, 107, 0.15);
+            border-left: 6px solid #ff6b6b;
+            padding: 30px;
+            margin: 30px 0;
+            font-size: 1.3em;
+            font-weight: 500;
+            color: #ffb3b3;
+            border-radius: 8px;
+        }
+
+        .pipeline {
+            margin: 40px 0;
+            padding: 30px;
+            background: #0f1425;
+            border-radius: 8px;
+            border: 1px solid #2a3250;
+        }
+
+        .pipeline-step {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #1a1f3a;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border: 1px solid #2a3250;
+        }
+
+        .pipeline-step .step-number {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: #0a0e27;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .pipeline-step .step-content {
+            flex: 1;
+        }
+
+        .pipeline-step .step-title {
+            font-weight: 600;
+            font-size: 1.2em;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+
+        .pipeline-step .step-bias {
+            color: #ff6b6b;
+            font-style: italic;
+            font-size: 0.95em;
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #00d4ff;
+            margin: 10px 0;
+        }
+
+        .stat-box {
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 4px solid #ff6b6b;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+        }
+
+        .stat-box .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .stat-box p {
+            margin: 0;
+            font-size: 1em;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .example-card {
+            padding: 25px;
+            background: #0f1425;
+            border-radius: 8px;
+            border-top: 4px solid #00d4ff;
+            border: 1px solid #2a3250;
+            border-top: 4px solid #00d4ff;
+        }
+
+        .example-card h4 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .example-card .finding {
+            background: #1a1f3a;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-size: 0.95em;
+            color: #e2e8f0;
+            border: 1px solid #2a3250;
+        }
+
+        .example-card .finding strong {
+            color: #00d4ff;
+        }
+
+        .example-card .source {
+            font-size: 0.85em;
+            color: #94a3b8;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .comparison-item {
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .comparison-item.bad {
+            background: rgba(255, 107, 107, 0.15);
+            border: 2px solid #ff6b6b;
+        }
+
+        .comparison-item.good {
+            background: rgba(0, 212, 255, 0.15);
+            border: 2px solid #00d4ff;
+        }
+
+        .comparison-item .score {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .comparison-item.bad .score {
+            color: #ff6b6b;
+        }
+
+        .comparison-item.good .score {
+            color: #00d4ff;
+        }
+
+        .comparison-item .label {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+        }
+
+        .comparison-item .details {
+            color: #94a3b8;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .action-card {
+            padding: 25px;
+            background: #0f1425;
+            border-radius: 8px;
+            border-left: 4px solid #00d4ff;
+            border: 1px solid #2a3250;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .action-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .action-card h4 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .action-card p {
+            font-size: 0.95em;
+            margin: 0;
+            color: #e2e8f0;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #c44569 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .cta h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.3em;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .highlight {
+            background: rgba(0, 212, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+            font-size: 0.9em;
+        }
+
+        section img {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            section img {
+                height: 250px !important;
+            }
+            
+            header h1 {
+                font-size: 2em;
+            }
+            
+            header .subtitle {
+                font-size: 1.1em;
+            }
+
+            section {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Question the Algorithm</h1>
+        <p class="subtitle">Why "data-driven" doesn't mean unbiased—and what you can do about it</p>
+    </header>
+
+    <div class="container">
+        <section>
+            <img src="https://images.unsplash.com/photo-1718775044811-8eba835f9d50?w=1200&q=80" alt="Surveillance camera with facial recognition technology tracking people at night" style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 30px;">
+            
+            <div class="hook">
+                Your loan application was denied by an algorithm. The credit card company can't tell you exactly why. Should you trust that decision?
+            </div>
+
+            <p>We've been taught to trust numbers and data. When an algorithm makes a decision—whether it's approving your loan, predicting crime risk, or deciding what news you see—it feels objective. Scientific. Unbiased.</p>
+
+            <p>But here's the problem: <span class="highlight">algorithms aren't neutral</span>. They're designed by people, trained on imperfect data, and optimized for specific goals that may have nothing to do with fairness or accuracy. The technical complexity just makes these human choices invisible.</p>
+
+            <p>This matters because algorithmic systems now affect major parts of your life. And most people have no idea how they actually work.</p>
+        </section>
+
+        <section>
+            <h2>Where the Bias Hides</h2>
+            
+            <img src="https://images.unsplash.com/photo-1721485508074-3b4f78e72a70?w=1200&q=80" alt="Green binary code streaming like in the Matrix, representing data and algorithms" style="width: 100%; height: 350px; object-fit: cover; border-radius: 8px; margin-bottom: 25px;">
+            
+            <p>When people say a decision is "data-driven," they make it sound automatic—like the computer just crunched numbers and spit out truth. But look closer at what actually happens:</p>
+
+            <div class="pipeline">
+                <div class="pipeline-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Data Collection</div>
+                        <div class="step-bias">Human choice: What gets measured? Who's included? What's left out?</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="pipeline-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Feature Selection</div>
+                        <div class="step-bias">Human choice: Which variables matter? How are they weighted?</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="pipeline-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Model Design</div>
+                        <div class="step-bias">Human choice: What counts as "success"? What gets optimized for?</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="pipeline-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Output</div>
+                        <div class="step-bias">Looks objective, but reflects all the assumptions baked in above</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>At every single stage, people are making judgment calls. The algorithm just executes those judgments at scale—and makes them look like facts.</p>
+        </section>
+
+        <section>
+            <h2>Real-World Impact</h2>
+            
+            <img src="https://images.unsplash.com/photo-1714118655200-54c9f84a2c97?w=1200&q=80" alt="Person illuminated by binary code, representing humans being analyzed by algorithms" style="width: 100%; height: 350px; object-fit: cover; border-radius: 8px; margin-bottom: 30px;">
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Criminal Justice Algorithms</h4>
+                    <div class="finding">
+                        <strong>ProPublica Investigation (2016):</strong> Analyzed COMPAS risk assessment used in courts nationwide. Found Black defendants were <strong>twice as likely</strong> to be incorrectly labeled as high risk compared to white defendants.
+                    </div>
+                    <div class="finding">
+                        When the algorithm was wrong, white defendants labeled low risk were far more likely to reoffend than Black defendants with the same score.
+                    </div>
+                    <div class="finding">
+                        Only 20% of people predicted to commit violent crimes actually did.
+                    </div>
+                    <div class="source">Source: ProPublica, "Machine Bias" (2016)</div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Credit Scoring Systems</h4>
+                    <div class="finding">
+                        <strong>Stanford/U Chicago Study (2021):</strong> Credit scores are 5-10% <strong>less accurate</strong> for minority and low-income borrowers due to "thin" credit files.
+                    </div>
+                    <div class="finding">
+                        <strong>2021 Data:</strong> Median credit score for Black consumers: <strong>639</strong>. For white consumers: <strong>730</strong> (nearly 100 points higher).
+                    </div>
+                    <div class="finding">
+                        <strong>Urban Institute (2024):</strong> Black and Brown borrowers are more than <strong>twice as likely</strong> to be denied loans than white borrowers.
+                    </div>
+                    <div class="source">Sources: Stanford HAI, National Consumer Law Center, Urban Institute</div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Social Media Algorithms</h4>
+                    <div class="finding">
+                        <strong>YouTube:</strong> Recommendation algorithm responsible for <strong>700 million hours</strong> of daily watch time (70% of total viewing).
+                    </div>
+                    <div class="finding">
+                        <strong>Twitter/X Study (2024):</strong> Algorithm amplifies emotionally charged, hostile content optimized for engagement, not accuracy.
+                    </div>
+                    <div class="finding">
+                        <strong>TikTok Research (2022):</strong> Watching just 20 videos questioning elections retrains the algorithm to push more conspiracy theories and extremism.
+                    </div>
+                    <div class="source">Sources: Mozilla, EPJ Data Science, Tech Policy Press</div>
+                </div>
+            </div>
+
+            <h3>Why This Happens</h3>
+
+            <p>Take the criminal justice example. COMPAS was trained on historical arrest data—data reflecting decades of racially biased policing. More arrests in Black neighborhoods don't necessarily mean more crime; they often mean more police presence. But the algorithm learned to treat arrest patterns as objective truth.</p>
+
+            <p>Or consider credit scoring: minority borrowers often have less data in their credit files (using alternative financial services, shorter credit histories). With less data, the algorithm makes noisier predictions—but those predictions still determine who gets loans.</p>
+
+            <p>Social media is different but equally problematic. Platforms optimize for engagement—clicks, shares, time spent. Research shows this consistently amplifies emotional, divisive, and low-quality content because that's what keeps people scrolling. The algorithm isn't trying to inform you; it's trying to keep you on the platform.</p>
+
+            <p>None of this is a bug. It's what happens when you treat "data-driven" as a synonym for "objective."</p>
+        </section>
+
+        <section>
+            <h2>What You Can Do</h2>
+
+            <p>The goal isn't to reject technology or go back to "gut feelings." It's to stop treating algorithms like they're infallible and start treating them like what they are: tools built by humans with specific goals and limitations.</p>
+
+            <div class="action-grid">
+                <div class="action-card">
+                    <div class="icon">❓</div>
+                    <h4>Ask Questions</h4>
+                    <p>Next time you encounter an algorithmic decision, ask: What data was this trained on? What is it optimizing for? Who built it, and what assumptions did they make?</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="icon">📢</div>
+                    <h4>Demand Transparency</h4>
+                    <p>Support laws requiring companies and governments to disclose how their algorithmic systems work—especially for high-stakes decisions like loans, sentencing, and content moderation.</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="icon">📚</div>
+                    <h4>Build Data Literacy</h4>
+                    <p>Learn basic concepts: correlation vs. causation, what training data means, how models can be biased. You don't need to code—just understand the fundamentals.</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="icon">🔍</div>
+                    <h4>Stay Skeptical</h4>
+                    <p>When someone says a system is "data-driven" or "objective," treat it as a claim that needs evidence—not as proof of neutrality. Check the sources, question the metrics.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>The Bottom Line</h2>
+            <p>Algorithms are powerful tools. But they're not truth machines. They're shaped by human choices about data, design, and goals—choices that often stay hidden behind technical complexity.</p>
+            <p style="margin-top: 30px; font-weight: 600;">Next time someone tells you a decision is "data-driven," ask them: <em>Whose data? Measuring what? Optimized for which goal?</em></p>
+        </section>
+    </div>
+
+    <footer>
+        <p>Created as part of a multimodal advocacy project on algorithmic transparency and data literacy.</p>
+        <p style="margin-top: 10px;">Research sources: ProPublica, Stanford HAI, MIT Technology Review, Urban Institute, EPJ Data Science, Tech Policy Press</p>
+        <p style="margin-top: 10px; font-size: 0.85em;">Images: Unsplash (A Chosen Soul, Ubaid E. Alyafizi, A.C.) - Free to use under Unsplash License</p>
+    </footer>
+</body>
+</html>
